@@ -5,7 +5,7 @@ defined('_JEXEC') or die('Access denied');
 ?>
 	<div class='chat-div'>
 		<h2 class='chat-app-title'>ChatBot!</h2><hr/>	
-		<p style='min-height:20px;'><span class='typing' style='display:none;'><?php echo JFactory::getUSer()->name;?> is Typing.....</span></p>
+		<p style='min-height:20px;'><span class='typing' style='display:none;'><?php echo JFactory::getUser()->name;?> is Typing.....</span></p>
 		<div class='chat-msgarea'>
 			<div class='msg-disp'>
 				

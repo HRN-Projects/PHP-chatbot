@@ -357,6 +357,7 @@ class ChatterController extends JControllerLegacy
 			}
 			else
 			{
+				$def = preg_replace('/\[[0-9]+\]/','',html_entity_decode($def));
 				$resp = $def;
 			}
 

@@ -14,12 +14,12 @@ class ChatterController extends JControllerLegacy
 	/**
 	* Default function to initiate chat window and set the chat going.
 	*/
-	function chat()						# Default function 'chat'
+	function chat()					# Default function 'chat'
 	{
 		$doc = JFactory::getDocument();
 		$doc->addStyleSheet(JURI::root().'media/com_chatter/css/chatter.css');		# Link custom CSS file
 		$doc->addScript(JURI::root().'media/com_chatter/js/jquery-3.4.0.min.js');	# Link the jQuery file
-		$doc->addScript(JURI::root().'media/com_chatter/js/frontend.js');			# Link custom JS file
+		$doc->addScript(JURI::root().'media/com_chatter/js/frontend.js');		# Link custom JS file
 
 		if(!JRequest::getVar('view'))
 		{
@@ -33,7 +33,7 @@ class ChatterController extends JControllerLegacy
 	/**
 	* Function to send the input message as ajax request in form of JSON object.
 	*/
-	function getMsgRequest()						# Function to get input from user and send ajax request as JSON
+	function getMsgRequest()			# Function to get input from user and send ajax request as JSON
 	{
 		$app = JFactory::getApplication();
 		$msg = JRequest::getString('msg');
@@ -42,7 +42,7 @@ class ChatterController extends JControllerLegacy
 
 		$res = array();
 
-		if($user == 0)									# Check if the user is logged in or not
+		if($user == 0)						# Check if the user is logged in or not
 		{
 			$res['status'] = false;
 			$res['msg'] = 'Please login first!';
@@ -50,7 +50,7 @@ class ChatterController extends JControllerLegacy
 			exit();
 		}
 
-		if($msg == "")									# Check if the input is blank/null
+		if($msg == "")						# Check if the input is blank/null
 		{
 			$res['status'] = false;
 			$res['msg'] = 'Please enter message!';
@@ -59,7 +59,7 @@ class ChatterController extends JControllerLegacy
 		}
 
 		if($chatID = $this->chatToDb($msg,$user))		# 1. Call to insert input msg from user and get last
-		{												# 	 inserted ID
+		{							# inserted ID.
 			$msgDtl = $this->showLastMsg($chatID);		# 2. Call to fetch the msg using last inserted ID.
 			$res['chatDetails'] = $msgDtl;
 			$res['status'] = true;
@@ -68,7 +68,7 @@ class ChatterController extends JControllerLegacy
 		{
 			$res['status'] = false;
 		}
-		echo json_encode($res);							# Sending JSON encoded data with status check
+		echo json_encode($res);					# Sending JSON encoded data with status check
 		$app->close();
 	}
 
@@ -106,7 +106,7 @@ class ChatterController extends JControllerLegacy
 	private function showLastMsg($id)
 	{
 		$model = $this->getModel('Chatter');			# Getting model instance of 'Chatter' model
-		$lastIns = $model->selectLastInserted($id);			# get msg of last inserted id
+		$lastIns = $model->selectLastInserted($id);		# get msg of last inserted id
 
 		return $lastIns;
 	}
@@ -212,7 +212,7 @@ class ChatterController extends JControllerLegacy
 		$respDtl = array();
 
 
-		if(in_array($msg, $greets))				# Check for greetings
+		if(in_array($msg, $greets))			# Check for greetings
 		{
 			$resp = array_rand($greets);
 			$resp=$greets[$resp].' !'; 
@@ -273,7 +273,7 @@ class ChatterController extends JControllerLegacy
 		
 			$resp = 'Current temperature in '.$curr_city.' : '.$temp_c.' &deg;C | '.$temp_f.' &deg;F';
 		}
-		else if(in_array($msg, $helper_cmd))	# Check for help commands
+		else if(in_array($msg, $helper_cmd))		# Check for help commands
 		{
 			$resp = "List of commands available :-<ol list-style-type='1'>
 				<li>Greetings (Eg. - Hi)</li>
@@ -325,7 +325,7 @@ class ChatterController extends JControllerLegacy
 				$resp = $calc;
 			}	
 		}
-		else if((strpos($msg, 'search') === 0))			# Check for search
+		else if((strpos($msg, 'search') === 0))		# Check for search
 		{
 			array_shift($msg_arr);
 			$search_str = implode(' ',$msg_arr);
@@ -362,7 +362,7 @@ class ChatterController extends JControllerLegacy
 			}
 
 		}
-		else 						# If no commands is applicable, show default text
+		else 				# If no commands is applicable, show default text
 		{
 			$resp = 'No response available for - "'.$msg.'". Check for wrong spellings or commands, for all available commands, type "chatbot help" or "all commands".';
 		}

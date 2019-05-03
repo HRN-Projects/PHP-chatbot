@@ -2,13 +2,24 @@ var jq = jQuery.noConflict();
 
 jq(document).ready(function(){
 
-	// Function to "auto-scroll" the chat box to latest response
+	/**
+	* Function to "auto-scroll" the chat box to latest response
+	*/
 	function scrolltoLatest()
 	{
 		jq('div.msg-disp').scrollTop(jq('div.msg-disp')[0].scrollHeight);
 	}
 
-	// Function for checking Responses from bot PHP function in controller - checkForResp
+
+	/**
+	* Function for checking Responses from bot PHP function in controller - checkForResp
+	* 
+	* @param string msg
+	*			The input msg for which the response is to be matched.
+	*
+	* @return html respTags
+	*			appends the html code with the appropriate response found in PHP controller 
+	*/
   	function giveResp(msg)
 	{
 		var param = {};
@@ -50,8 +61,8 @@ jq(document).ready(function(){
 		jq('.typing').hide();
 	});
 
-	/*
-	*** Onclick chat button
+	/**
+	* Onclick chat button
 	*/
 	jq(document).on('click','#send-btn',function(){
 		var msg = jq('.msg-input').val().trim();

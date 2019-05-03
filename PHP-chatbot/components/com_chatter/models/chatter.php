@@ -6,7 +6,19 @@ jimport('joomla.application.component.model');
 
 class ChatterModelChatter extends JModelLegacy
 {
-	# Function to insert and store the last msg input by user.
+
+	/**
+	* Function to insert and store the last msg input by user.
+	* 
+	* @param string $msg
+	*			The string input from user.
+	*
+	* @param int $user
+	*			The user id from which the message was inserted. 
+	*
+	* @return int id
+	*			The id of last successfully inserted row.
+	*/
 	function insert($msg, $user)
 	{
 		$db = JFactory::getDBO();
@@ -22,7 +34,16 @@ class ChatterModelChatter extends JModelLegacy
 		}
 	}
 
-	# Function to select last inserted chat msg w.r.t last inserted ID.
+
+	/**
+	* Function to select last inserted chat msg w.r.t last inserted ID.
+	* 
+	* @param int $id
+	*			The last inserted row ID returned from the above function 'insert'.
+	*
+	* @return array $lastInsData
+	*			Array containing the message, user id w.r.t last inserted id. 
+	*/
 	function selectLastInserted($id)
 	{
 		$id = (INT)$id;

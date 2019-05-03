@@ -10,12 +10,16 @@ jimport('joomla.application.component.controller');
 
 class ChatterController extends JControllerLegacy
 {
+
+	/**
+	* Default function to initiate chat window and set the chat going.
+	*/
 	function chat()						# Default function 'chat'
 	{
 		$doc = JFactory::getDocument();
-		$doc->addStyleSheet(JURI::root().'media/com_chatter/css/chatter.css');
-		$doc->addScript(JURI::root().'media/com_chatter/js/jquery-3.4.0.min.js');
-		$doc->addScript(JURI::root().'media/com_chatter/js/frontend.js');
+		$doc->addStyleSheet(JURI::root().'media/com_chatter/css/chatter.css');		# Link custom CSS file
+		$doc->addScript(JURI::root().'media/com_chatter/js/jquery-3.4.0.min.js');	# Link the jQuery file
+		$doc->addScript(JURI::root().'media/com_chatter/js/frontend.js');			# Link custom JS file
 
 		if(!JRequest::getVar('view'))
 		{
@@ -25,7 +29,10 @@ class ChatterController extends JControllerLegacy
 		parent::display();
 	}
 
-	// function to sent ajax request
+
+	/**
+	* Function to send the input message as ajax request in form of JSON object.
+	*/
 	function getMsgRequest()						# Function to get input from user and send ajax request as JSON
 	{
 		$app = JFactory::getApplication();
@@ -65,7 +72,19 @@ class ChatterController extends JControllerLegacy
 		$app->close();
 	}
 
-	//Private function to insert data from ajax request to DB
+
+	/**
+	* Function to insert and store the last msg input by user.
+	* 
+	* @param string $msg
+	*			The string input from user.
+	*
+	* @param int $user
+	*			The user id from which the message was inserted. 
+	*
+	* @return int $inserted_id
+	*			The id of last successfully inserted row.
+	*/
 	function chatToDb($msg, $user)
 	{
 		$model = $this->getModel('Chatter');			# Getting model instance of 'Chatter' model
@@ -75,7 +94,15 @@ class ChatterController extends JControllerLegacy
 	}
 
 
-	//Function to retrieve the last inserted chat msg -
+	/**
+	* Function to select last inserted chat msg w.r.t last inserted ID.
+	* 
+	* @param int $id
+	*			The last inserted row ID returned from the above function 'chatToDb'.
+	*
+	* @return array $lastIns
+	*			Array containing the message, user id w.r.t last inserted id. 
+	*/
 	private function showLastMsg($id)
 	{
 		$model = $this->getModel('Chatter');			# Getting model instance of 'Chatter' model
@@ -85,7 +112,16 @@ class ChatterController extends JControllerLegacy
 	}
 
 
-	// Function to scrap html from any URL
+	/**
+	* Function to scrap html from any URL.
+	* 
+	* @param string $url
+	*			The URL from which the data is to be scraped.
+	*
+	* @return object $html_output
+	*			The html parsed from the URL passed using cURL.
+	*/
+	// 
 	function scrapHTML($url)
 	{
 		if(!function_exists('curl_init'))
@@ -122,7 +158,9 @@ class ChatterController extends JControllerLegacy
 	}
 
 
-	// Function for checking for a response of msg entered
+	/**
+	* Function for checking for a response of msg entered.
+	*/
 	function checkForResponse()
 	{	
 		$app = JFactory::getApplication();
